@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    ">
+
+	<!-- Component Scanning -->
+
+
+	<context:component-scan
+		base-package="com.simplecomplexform" />
+	<!-- but yaha per aapko batana huga ki ya annotations base hai -->
+	<mvc:annotation-driven /> <!-- iss tag ko lagana huta hai mvc ko unable karne key liye -->
+	<!-- yaha per aap file ka location batawogaye ju aapka local hai jiska name 
+		resources -->
+	<mvc:resources location="WEB-INF/resources/"
+		mapping="/resources/**" />
+
+	<!-- View Resolver -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		name="viewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10485760" /> <!-- 10 MB -->
+	</bean>
+	<!-- Step(1) -->
+	<!-- configuration laga hai tu aapko used karna hai Interceptor tag used karna hai aaur yah Interceptor aa raha hai Spring MVC sa tu upper aap mvc wala schema laga lena (xmlns:mvc="http://www.springframework.org/schema/mvc")  --> 
+ 
+    <mvc:interceptors>
+            
+            <mvc:interceptor>
+            
+                <mvc:mapping path="/welcome"/>
+               <bean class="com.simplecomplexform.MyInterceptor"></bean>
+            </mvc:interceptor>
+    
+     </mvc:interceptors>
+    
+   
+ 
+</beans>	
